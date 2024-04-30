@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>d3.js ile Düğümler Oluşturma ve Bağlantılar</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <svg width="1200" height="900"></svg>
+
+    <script>
+        // SVG alanını seç
+        const svg = d3.select("svg");
+
+        // Örnek veri kümesi
+        const data_columns = ["California", "Texas", "Florida", "New York", "Illinois", "Ohio", "Pennsylvania", "North Carolina",
+            "Michigan", "New Jersey", "Georgia", "Tennessee", "Arizona", "Massachusetts", "Virginia", "Indiana",
+            "Washington", "Wisconsin", "Minnesota", "Colorado", "South Carolina", "Kentucky", "Missouri",
+            "Louisiana", "Alabama"];
+
+        // Düğümleri ekrana sığdırmak için alan boyutları
+        const width = 1200;
+        const height = 900;
+        const margin = 50;
+
+        // Düğümleri ekrana sığdırmak için uygun aralıklarla yerleştir
+        const nodeCount = data_columns.length;
+        const rows = Math.ceil(Math.sqrt(nodeCount));
+        const cols = Math.ceil(nodeCount / rows);
+
+        const nodeWidth = (width - 2 * margin) / cols;
+        const nodeHeight = (height - 2 * margin) / rows;
+
+        const nodes = data_columns.map((d, i) => ({
+            id: i,
+            name: d,
+            x: margin + (i % cols) * nodeWidth + Math.random() * nodeWidth * 0.8,
+            y: margin + Math.floor(i / cols) * nodeHeight + Math.random() * nodeHeight * 0.8
+        }));
+
+        // Düğümleri çiz
+        svg.selectAll("circle")
+            .data(nodes)
+            .enter().append("circle")
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y)
+            .attr("r", 25) // Düğüm boyutunu küçült
+            .style("fill", "steelblue");
+
+        // Düğüm etiketlerini ekle
+        svg.selectAll("text")
+            .data(nodes)
+            .enter().append("text")
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+            .attr("dy", "0.35em") // Yatay hizalama
+            .attr("text-anchor", "middle") // Metni düğümün ortasına hizala
+            .text(d => d.name)
+            .style("font-size", "10px")
+            .style("fill", "black");
+
+        // Bağlantıları çiz
+        for (let i = 1; i < nodes.length; i++) {
+            const source = nodes[i - 1];
+            const target = nodes[i];
+            const midX = (source.x + target.x) / 2;
+            const midY = (source.y + target.y) / 2;
+            svg.append("line")
+                .attr("x1", source.x)
+                .attr("y1", source.y)
+                .attr("x2", midX)
+                .attr("y2", midY)
+                .style("stroke", "black")
+                .style("stroke-width", 1);
+            svg.append("line")
+                .attr("x1", midX)
+                .attr("y1", midY)
+                .attr("x2", target.x)
+                .attr("y2", target.y)
+                .style("stroke", "black")
+                .style("stroke-width", 1);
+        }
+    </script>
+</body>
+</html>

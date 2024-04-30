@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dikdörtgen Harita</title>
+    <!-- Three.js kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 3D sahne için bir konteyner -->
+    <div id="sahne-container"></div>
+
+    <script>
+        // Three.js ile 3D sahne oluşturma
+        const sahne = new THREE.Scene();
+        sahne.background = new THREE.Color(0xffffff); // Arka plan rengi (beyaz)
+
+        const kamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('sahne-container').appendChild(renderer.domElement);
+
+        // Türkiye'yi temsil eden bir küre oluşturma
+        const geometry = new THREE.SphereGeometry(0.5, 32, 32); // Küre geometrisi (boyutu küçültüldü)
+        const material = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.1 }); // Kırmızı renkte ve şeffaf materyal
+        const turkiye = new THREE.Mesh(geometry, material);
+        turkiye.position.set(0, 0, 0); // Türkiye'nin konumu
+        sahne.add(turkiye);
+
+        // Dikdörtgen harita geometrisi oluşturma
+        const geometry2 = new THREE.PlaneGeometry(10, 5); // Genişlik ve yükseklik
+        const texture = new THREE.TextureLoader().load('dunyaharitasi.jpg'); // Harita resmi
+        const material2 = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+        const harita = new THREE.Mesh(geometry2, material2);
+        sahne.add(harita);
+
+        // Kamerayı ayarlama
+        kamera.position.z = 5;
+
+        // Render döngüsü
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(sahne, kamera);
+        }
+        animate();
+    </script>
+</body>
+</html>
