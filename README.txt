@@ -2,6 +2,7 @@
 
 Bu proje, ülkelerin coğrafi yakınlıklarına göre COVID-19 vaka sayılarında benzerlik olup olmadığını analiz etmeyi amaçlamaktadır. Bu analiz, ülkeler arasındaki salgın dinamiklerini anlamaya ve bölgesel sağlık politikalarının etkinliğini değerlendirmeye katkı sağlamayı hedeflemektedir.
 
+
 ## Proje Akış Diyagramı
 
 1. **Proje Akış Diyagramının Hazırlanması**
@@ -42,5 +43,6 @@ Projeyi çalıştırdıktan sonra,karşınıza çıkan dünya haritasında isted
 - **İstatistiksel Analiz:** Python kullanılarak temel istatistiksel analizler.
 - **Veri Görselleştirme:** HTML, CSS ve JavaScript ile etkileşimli harita oluşturma.
 - **İstatistiksel Karşılaştırmalar:** İstatistiksel yöntemlerle ülkeler arasındaki vaka sayılarının karşılaştırılması.
+
 
 
